@@ -18,6 +18,7 @@ public class AuthController {
 
   @PostMapping("/login")
   public void login(@RequestBody UserData user){
+    //recebendo senha informada pelo user e encriptando
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
   }
   
