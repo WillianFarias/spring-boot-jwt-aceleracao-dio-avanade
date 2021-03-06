@@ -14,11 +14,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.avanade.dio.jwt.data.UserData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -50,6 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   }
 
   // apos autenticar o token sera gerado pelo auth0
+  @Override
   protected void successfulAuthentication(HttpServletRequest req,
     HttpServletResponse res,
     FilterChain chain,
@@ -58,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       String token = JWT.create()
       //posso estar passando quaisquer informacoes dentro do meu jwt, por exemplo
       //o saldo do cartao do meu cliente
-        .withSubject(((User) auth.getPrincipal()).getName())
+        .withSubject(((User) auth.getPrincipal()).getUsername())
         .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
         .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 

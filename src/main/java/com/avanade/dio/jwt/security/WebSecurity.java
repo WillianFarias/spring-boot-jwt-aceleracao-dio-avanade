@@ -37,7 +37,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
       .permitAll()
       .anyRequest().authenticated()
       .and()
-      .addFilter(new JWTAuthenticationFilter((authenticationManager())))
+      .addFilter(new JWTAuthenticationFilter((authenticationManager())))//gera o token
+      .addFilter(new JWTAuthorizationFilter((authenticationManager())))//ler o token
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
       //JWTAuthenticationFilter é responsavel pela autenticacao
       //e sessionManagement define que nenhum dado da sessao deve ser guardado
