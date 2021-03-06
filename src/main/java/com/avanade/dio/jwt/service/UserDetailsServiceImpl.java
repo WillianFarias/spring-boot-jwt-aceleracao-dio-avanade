@@ -1,7 +1,9 @@
 package com.avanade.dio.jwt.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import com.avanade.dio.jwt.data.UserData;
 
@@ -38,5 +40,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     user.setPassword(bCryptPasswordEncoder.encode("nimda"));
 
     return user;
+  }
+
+  public List<UserData> listUsers() {
+    ArrayList<UserData> lst = new ArrayList<>();
+    lst.add(findUser("admin"));
+    return lst;
   }
 }
